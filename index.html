@@ -1,1 +1,35 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://js.arcgis.com/4.27/"></script>
+</head>
+<body>
+
+<div id="counter">Loading...</div>
+
+<script>
+require(["esri/layers/FeatureLayer"], function(FeatureLayer){
+
+const layer = new FeatureLayer({
+url:"https://YOURSERVER/arcgis/rest/services/WebsiteVisitors/FeatureServer/0"
+});
+
+layer.applyEdits({
+addFeatures:[{
+attributes:{
+VisitDate:new Date()
+}
+}]
+});
+
+layer.queryFeatureCount().then(function(count){
+document.getElementById("counter").innerHTML =
+count + " Visitors";
+});
+
+});
+</script>
+
+</body>
+</html>
