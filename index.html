@@ -1,33 +1,39 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-  <script src="https://js.arcgis.com/4.27/"></script>
+<meta charset="utf-8">
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI,Arial,sans-serif;
+}
+.counter{
+    background:#111;
+    color:#fff;
+    padding:12px 18px;
+    display:inline-block;
+    font-size:28px;
+    font-weight:600;
+}
+.count{
+    color:#1E88E5;
+    font-weight:bold;
+}
+</style>
 </head>
+
 <body>
 
-<div id="counter">Loading...</div>
+<div class="counter">
+    Visitors Count :
+    <span id="count" class="count">Loading...</span>
+</div>
 
 <script>
-require(["esri/layers/FeatureLayer"], function(FeatureLayer){
-
-const layer = new FeatureLayer({
-url:"https://YOURSERVER/arcgis/rest/services/WebsiteVisitors/FeatureServer/0"
-});
-
-layer.applyEdits({
-addFeatures:[{
-attributes:{
-VisitDate:new Date()
-}
-}]
-});
-
-layer.queryFeatureCount().then(function(count){
-document.getElementById("counter").innerHTML =
-count + " Visitors";
-});
-
+fetch("count.txt")
+.then(r => r.text())
+.then(data => {
+    document.getElementById("count").innerHTML = data;
 });
 </script>
 
