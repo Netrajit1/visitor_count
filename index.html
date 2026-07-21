@@ -1,40 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Visitor Counter</title>
+
 <style>
+
 body{
     margin:0;
-    font-family:Segoe UI,Arial,sans-serif;
+    background:transparent;
+    overflow:hidden;
+    font-family:Calibri, Arial, sans-serif;
 }
+
 .counter{
-    background:#111;
-    color:#fff;
-    padding:12px 18px;
-    display:inline-block;
-    font-size:28px;
-    font-weight:600;
-}
-.count{
-    color:#1E88E5;
+    font-size:25px;
     font-weight:bold;
+    color:#000000;
+    white-space:nowrap;
 }
+
 </style>
+
 </head>
 
 <body>
 
 <div class="counter">
-    Visitors Count :
-    <span id="count" class="count">Loading...</span>
+    Visitor Count:
+    <span id="visitorCount">Loading...</span>
 </div>
 
 <script>
-fetch("count.txt")
-.then(r => r.text())
+
+fetch("https://api.countapi.xyz/hit/nectar-geomatics-portal/visitors")
+.then(response => response.json())
 .then(data => {
-    document.getElementById("count").innerHTML = data;
+    document.getElementById("visitorCount").textContent = data.value;
+})
+.catch(() => {
+    document.getElementById("visitorCount").textContent = "0";
 });
+
 </script>
 
 </body>
